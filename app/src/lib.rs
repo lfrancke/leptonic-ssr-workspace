@@ -46,6 +46,5 @@ fn HomePage() -> impl IntoView {
     let (count, set_count) = create_signal(0);
     view! {
         <h1>Hello</h1>
-
     }
 }

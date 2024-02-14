@@ -9,7 +9,7 @@ lto = true
 opt-level = 'z'
 
 [workspace.dependencies]
-leptonic = { path = "/home/lars/dev/external/leptonic/leptonic" }
+leptonic = { git = "https://github.com/lfrancke/leptonic.git", branch="feat/workspace05" }
 #leptonic = { version = "0.5.0" }
 
 leptos = { version = "0.6" }

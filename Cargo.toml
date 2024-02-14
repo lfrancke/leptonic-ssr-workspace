@@ -9,9 +9,12 @@ lto = true
 opt-level = 'z'
 
 [workspace.dependencies]
-leptos = { version = "0.6", features = ["nightly"] }
-leptos_meta = { version = "0.6", features = ["nightly"] }
-leptos_router = { version = "0.6", features = ["nightly"] }
+leptonic = { path = "/home/lars/dev/external/leptonic/leptonic" }
+#leptonic = { version = "0.5.0" }
+
+leptos = { version = "0.6" }
+leptos_meta = { version = "0.6" }
+leptos_router = { version = "0.6" }
 leptos_axum = { version = "0.6" }
 
 axum = "0.7"
@@ -25,7 +28,7 @@ thiserror = "1"
 tokio = { version = "1.33.0", features = ["full"] }
 tower = { version = "0.4.13", features = ["full"] }
 tower-http = { version = "0.5", features = ["full"] }
-wasm-bindgen = "=0.2.89"
+wasm-bindgen = "0.2.91"
 
 # See https://github.com/akesson/cargo-leptos for documentation of all the parameters.
 
@@ -97,3 +100,10 @@ lib-features = []
 #
 # Optional. Defaults to false.
 lib-default-features = false
+
+[workspace.metadata.leptonic]
+# REQUIRED: Leptonic's build-script will copy the Leptonic themes to this directory.
+style-dir = "style"
+
+# REQUIRED: Leptonic's build-script will copy static JS dependencies to this directory.
+js-dir = "public/js"

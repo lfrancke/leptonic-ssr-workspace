@@ -1,19 +1,16 @@
-use crate::error_template::{AppError, ErrorTemplate};
-
-use leptos::*;
-use leptos_meta::*;
-use leptos_router::*;
+mod error_template;
 
 use leptonic::prelude::*;
+use leptos::*;
+use leptos_meta::{provide_meta_context, Meta, Stylesheet, Title};
+use leptos_router::*;
 
-pub mod error_template;
+use crate::error_template::{AppError, ErrorTemplate};
 
 #[component]
 pub fn App() -> impl IntoView {
-    // Provides context that manages stylesheets, titles, meta tags, etc.
     provide_meta_context();
 
-    let (text, set_text) = create_signal(String::new());
     view! {
         <Meta name="charset" content="UTF-8"/>
         <Meta name="description" content="Leptonic SSR template"/>
@@ -34,17 +31,25 @@ pub fn App() -> impl IntoView {
                 }
             }>
                 <Routes>
-                    <Route path="" view=|| view! { <HomePage/> }/>
+                    <Route path="" view=|| view! { <Welcome/> }/>
                 </Routes>
             </Router>
-        </Root>    }
+        </Root>
+    }
 }
 
-/// Renders the home page of your application.
 #[component]
-fn HomePage() -> impl IntoView {
+pub fn Welcome() -> impl IntoView {
     let (count, set_count) = create_signal(0);
+
     view! {
-        <h1>Hello</h1>
+        <Box style="display: flex; flex-direction: column; align-items: center; padding: 1em; min-height: 100%; min-width: 100%">
+            <H2>"Welcome to Leptonic"</H2>
+
+            <span style="margin-top: 3em;">"Count: " {move || count.get()}</span>
+            <Button on_click=move|_| set_count.update(|c| *c += 1)>
+                "Increase"
+            </Button>
+        </Box>
     }
 }

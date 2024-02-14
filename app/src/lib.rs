@@ -4,6 +4,8 @@ use leptos::*;
 use leptos_meta::*;
 use leptos_router::*;
 
+use leptonic::prelude::*;
+
 pub mod error_template;
 
 #[component]
@@ -11,36 +13,39 @@ pub fn App() -> impl IntoView {
     // Provides context that manages stylesheets, titles, meta tags, etc.
     provide_meta_context();
 
+    let (text, set_text) = create_signal(String::new());
     view! {
-        <Stylesheet id="leptos" href="/pkg/start-axum-workspace.css"/>
+        <Meta name="charset" content="UTF-8"/>
+        <Meta name="description" content="Leptonic SSR template"/>
+        <Meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <Meta name="theme-color" content="#8856e6"/>
 
-        // sets the document title
-        <Title text="Welcome to Leptos"/>
+        <Stylesheet id="leptos" href="/pkg/leptonic-template-ssr.css"/>
+        <Stylesheet href="https://fonts.googleapis.com/css?family=Roboto&display=swap"/>
 
-        // content for this welcome page
-        <Router fallback=|| {
-            let mut outside_errors = Errors::default();
-            outside_errors.insert_with_default_key(AppError::NotFound);
-            view! { <ErrorTemplate outside_errors/> }.into_view()
-        }>
-            <main>
+        <Title text="Leptonic SSR template"/>
+
+        <Root default_theme=LeptonicTheme::default()>
+            <Router fallback=|| {
+                let mut outside_errors = Errors::default();
+                outside_errors.insert_with_default_key(AppError::NotFound);
+                view! {
+                    <ErrorTemplate outside_errors/>
+                }
+            }>
                 <Routes>
-                    <Route path="" view=HomePage/>
+                    <Route path="" view=|| view! { <HomePage/> }/>
                 </Routes>
-            </main>
-        </Router>
-    }
+            </Router>
+        </Root>    }
 }
 
 /// Renders the home page of your application.
 #[component]
 fn HomePage() -> impl IntoView {
-    // Creates a reactive value to update the button
     let (count, set_count) = create_signal(0);
-    let on_click = move |_| set_count.update(|count| *count += 1);
-
     view! {
-        <h1>"Welcome to Leptos!"</h1>
-        <button on:click=on_click>"Click Me: " {count}</button>
+        <h1>Hello</h1>
+
     }
 }
